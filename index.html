@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alivflex - Suplemento Alimentar</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #C0191A;
+    --red-dark: #8B0F10;
+    --red-light: #F9E8E8;
+    --gold: #C9983A;
+    --gold-light: #F5EDD8;
+    --text: #1A1A1A;
+    --text-muted: #555;
+    --bg: #FAFAF8;
+    --white: #FFFFFF;
+    --border: #E5E0D8;
+    --radius: 14px;
+    --shadow: 0 2px 16px rgba(0,0,0,0.07);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 16px;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(160deg, #1A0A0A 0%, #3D0C0C 60%, #6B1A1A 100%);
+    padding: 0 0 56px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 100px;
+    margin: 36px 24px 20px;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 9vw, 56px);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.1;
+    padding: 0 24px;
+    margin-bottom: 8px;
+  }
+
+  .hero-title span { color: var(--gold); }
+
+  .hero-subtitle {
+    font-size: 15px;
+    color: rgba(255,255,255,0.65);
+    padding: 0 24px;
+    margin-bottom: 32px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+
+  .hero-img-wrap {
+    position: relative;
+    padding: 0 24px;
+    margin-bottom: 32px;
+  }
+
+  .hero-img-wrap img {
+    width: 100%;
+    max-width: 500px;
+    border-radius: var(--radius);
+    display: block;
+    margin: 0 auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  .hero-tag {
+    position: absolute;
+    bottom: 16px;
+    right: 36px;
+    background: var(--gold);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 100px;
+  }
+
+  .hero-pills {
+    display: flex;
+    gap: 10px;
+    padding: 0 24px;
+    flex-wrap: wrap;
+  }
+
+  .hero-pill {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.85);
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 100px;
+  }
+
+  /* SECTION */
+  section {
+    padding: 52px 24px;
+  }
+
+  section:nth-child(even) { background: var(--white); }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 6vw, 36px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+
+  .section-body {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.75;
+  }
+
+  /* PRODUCT IMAGES */
+  .img-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .img-grid img {
+    width: 100%;
+    border-radius: var(--radius);
+    display: block;
+    aspect-ratio: 1;
+    object-fit: cover;
+    box-shadow: var(--shadow);
+  }
+
+  .img-grid .full {
+    grid-column: 1 / -1;
+    aspect-ratio: 16/9;
+  }
+
+  /* INGREDIENTS */
+  .ingredients-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 28px;
+  }
+
+  .ingredient-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 16px;
+    box-shadow: var(--shadow);
+  }
+
+  .ingredient-card.highlight {
+    background: var(--red-light);
+    border-color: #E8BFBF;
+  }
+
+  .ingredient-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  .ingredient-dose {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--red);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .ingredient-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* TABELA NUTRICIONAL */
+  .nutr-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 24px;
+    font-size: 14px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  .nutr-table thead {
+    background: var(--red);
+    color: #fff;
+  }
+
+  .nutr-table thead th {
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  .nutr-table tbody tr:nth-child(odd) { background: var(--white); }
+  .nutr-table tbody tr:nth-child(even) { background: var(--red-light); }
+
+  .nutr-table td {
+    padding: 13px 16px;
+    color: var(--text);
+  }
+
+  .nutr-table td:last-child {
+    font-weight: 600;
+    color: var(--red);
+    text-align: right;
+  }
+
+  .nutr-note {
+    margin-top: 16px;
+    padding: 14px 16px;
+    background: var(--gold-light);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: 13px;
+    color: #7A5C20;
+    line-height: 1.6;
+  }
+
+  /* BENEFITS */
+  .benefits-list {
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 18px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .benefit-icon {
+    width: 42px;
+    height: 42px;
+    background: var(--red-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .benefit-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--red);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .benefit-text strong {
+    display: block;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .benefit-text span {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ANVISA */
+  .anvisa-box {
+    background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    text-align: center;
+    margin-top: 28px;
+    color: #fff;
+  }
+
+  .anvisa-box .anvisa-seal {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .anvisa-box p {
+    font-size: 13px;
+    opacity: 0.85;
+    line-height: 1.65;
+  }
+
+  .anvisa-highlight {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 100px;
+    padding: 5px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 14px;
+    color: #fff;
+  }
+
+  /* PRICING */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 28px;
+  }
+
+  .price-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 16px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .price-card.featured {
+    border-color: var(--gold);
+    background: linear-gradient(160deg, #FFF9F0 0%, #FFF3E0 100%);
+  }
+
+  .price-card-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: var(--gold);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 0 var(--radius) 0 var(--radius);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .price-period {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .price-main {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--red);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .price-installment {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .price-avista {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold);
+    background: var(--gold-light);
+    padding: 4px 10px;
+    border-radius: 100px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+  .price-detail {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .price-gratis {
+    display: inline-block;
+    background: #E8F7EE;
+    color: #1B7340;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-top: 6px;
+    border: 1px solid #B8E0C8;
+  }
+
+  /* PAYMENT */
+  .payment-box {
+    margin-top: 28px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+
+  .payment-header {
+    background: var(--red);
+    padding: 16px 20px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .payment-body {
+    background: var(--white);
+    padding: 20px;
+  }
+
+  .payment-feature {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  .payment-feature:last-child { border-bottom: none; }
+
+  .payment-check {
+    width: 20px;
+    height: 20px;
+    background: #E8F7EE;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .payment-check svg {
+    width: 11px;
+    height: 11px;
+    stroke: #1B7340;
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* CTA */
+  .cta-section {
+    background: linear-gradient(160deg, #1A0A0A 0%, #3D0C0C 100%);
+    padding: 56px 24px;
+    text-align: center;
+    color: #fff;
+  }
+
+  .cta-section .section-title { color: #fff; }
+  .cta-section .section-title span { color: var(--gold); }
+
+  .cta-body {
+    font-size: 15px;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 32px;
+    line-height: 1.7;
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: var(--gold);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 16px 32px;
+    border-radius: 100px;
+    text-decoration: none;
+    width: 100%;
+    max-width: 360px;
+    box-shadow: 0 6px 24px rgba(201,152,58,0.4);
+  }
+
+  .cta-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+
+  .cta-disclaimer {
+    margin-top: 20px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.6;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 28px 24px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    background: var(--white);
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+
+  .footer p {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* GLUTEN */
+  .gluten-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gold-light);
+    border: 1px solid #E8D4A0;
+    color: #7A5C20;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-top: 16px;
+  }
+
+  @media (max-width: 380px) {
+    .ingredients-grid, .pricing-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-badge">Suplemento Alimentar</span>
+  <h1 class="hero-title">Aliv<span>flex</span></h1>
+  <p class="hero-subtitle">Colageno Tipo II + Magnesio + Curcuma<br>60 capsulas de 500 mg</p>
+
+  <div class="hero-img-wrap">
+    <img src="produto-hero.jpg" 
+         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
+         alt="Alivflex produto">
+    <!-- Fallback visual product display -->
+    <div style="display:none; width:100%; max-width:500px; margin:0 auto; aspect-ratio:4/3; background:linear-gradient(135deg,#3D0C0C,#6B1A1A); border-radius:14px; align-items:center; justify-content:center; flex-direction:column; padding:32px; text-align:center;">
+      <div style="width:80px;height:100px;background:rgba(255,255,255,0.1);border-radius:10px;border:2px solid rgba(201,152,58,0.5);margin-bottom:16px;display:flex;align-items:center;justify-content:center;">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#C9983A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
+      </div>
+      <span style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff;">Alivflex</span>
+      <span style="font-size:13px;color:rgba(255,255,255,0.6);margin-top:6px;">60 capsulas · 500 mg</span>
+    </div>
+    <span class="hero-tag">Sem Gluten</span>
+  </div>
+
+  <div class="hero-pills">
+    <span class="hero-pill">100% Natural</span>
+    <span class="hero-pill">Sem Gluten</span>
+    <span class="hero-pill">Pague na Entrega</span>
+    <span class="hero-pill">Frete Gratis</span>
+  </div>
+</div>
+
+<!-- SOBRE O PRODUTO -->
+<section>
+  <span class="section-label">O Produto</span>
+  <h2 class="section-title">O que e o Alivflex?</h2>
+  <p class="section-body">
+    O Alivflex e um suplemento alimentar em capsulas desenvolvido com uma combinacao de ativos reconhecidos por seu papel no suporte a saude articular e bem-estar. Sua formula reune Colageno Tipo II, Curcuma, Condroitina, Magnesio, MSM e PEA — ingredientes naturais cuidadosamente selecionados para complementar uma rotina saudavel.
+  </p>
+
+  <div class="img-grid">
+    <img src="produto-1.jpg" alt="Produto 1">
+    <img src="produto-2.jpg" alt="Produto 2">
+  </div>
+
+  <div class="gluten-badge">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    Sem Gluten · Colorido artificialmente
+  </div>
+</section>
+
+<!-- INGREDIENTES -->
+<section>
+  <span class="section-label">Formula</span>
+  <h2 class="section-title">Ingredientes Ativos</h2>
+  <p class="section-body">Cada capsula de 500 mg contem a seguinte composicao por porcao de 2 capsulas:</p>
+
+  <div class="ingredients-grid">
+    <div class="ingredient-card highlight">
+      <span class="ingredient-name">Curcuma</span>
+      <span class="ingredient-dose">100 mg</span>
+      <p class="ingredient-desc">Especiaria natural com reconhecidas propriedades antioxidantes e anti-inflamatorias.</p>
+    </div>
+    <div class="ingredient-card">
+      <span class="ingredient-name">Condroitina</span>
+      <span class="ingredient-dose">100 mg</span>
+      <p class="ingredient-desc">Componente natural da cartilagem articular, amplamente estudado para suporte articular.</p>
+    </div>
+    <div class="ingredient-card">
+      <span class="ingredient-name">Magnesio</span>
+      <span class="ingredient-dose">100 mg</span>
+      <p class="ingredient-desc">Mineral essencial envolvido em mais de 300 reacoes enzimaticas no organismo.</p>
+    </div>
+    <div class="ingredient-card">
+      <span class="ingredient-name">MSM</span>
+      <span class="ingredient-dose">50 mg</span>
+      <p class="ingredient-desc">Composto de enxofre organico presente naturalmente em frutas, vegetais e graos.</p>
+    </div>
+    <div class="ingredient-card highlight">
+      <span class="ingredient-name">Colageno Tipo II</span>
+      <span class="ingredient-dose">2 mg</span>
+      <p class="ingredient-desc">O colageno tipo II nao desnaturado auxilia na manutencao da funcao articular.</p>
+    </div>
+    <div class="ingredient-card">
+      <span class="ingredient-name">PEA</span>
+      <span class="ingredient-dose">0,5 mg</span>
+      <p class="ingredient-desc">Palmitoiletanolamida, composto lipofilico de origem natural com acao moduladora.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TABELA NUTRICIONAL -->
+<section>
+  <span class="section-label">Informacao Nutricional</span>
+  <h2 class="section-title">Composicao por Porcao</h2>
+  <p class="section-body">Porcao de 2 capsulas (500 mg cada)</p>
+
+  <table class="nutr-table">
+    <thead>
+      <tr>
+        <th>Componente</th>
+        <th style="text-align:right;">Quantidade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Curcuma</td><td>100 mg</td></tr>
+      <tr><td>Condroitina</td><td>100 mg</td></tr>
+      <tr><td>Magnesio</td><td>100 mg</td></tr>
+      <tr><td>MSM</td><td>50 mg</td></tr>
+      <tr><td>Colageno Tipo II</td><td>2 mg</td></tr>
+      <tr><td>PEA</td><td>0,5 mg</td></tr>
+    </tbody>
+  </table>
+
+  <div class="nutr-note">
+    Nao contem quantidades significativas de carboidratos, acucares totais, proteinas, gorduras totais, gorduras saturadas, gorduras trans, fibra alimentar e sodio.
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section>
+  <span class="section-label">Diferenciais</span>
+  <h2 class="section-title">Por que escolher o Alivflex?</h2>
+
+  <div class="benefits-list">
+    <div class="benefit-item">
+      <div class="benefit-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <div class="benefit-text">
+        <strong>Formula Multi-ativo</strong>
+        <span>Combina seis ingredientes complementares em uma unica capsula, simplificando a rotina de suplementacao.</span>
+      </div>
+    </div>
+    <div class="benefit-item">
+      <div class="benefit-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      </div>
+      <div class="benefit-text">
+        <strong>Facil de Tomar</strong>
+        <span>60 capsulas por frasco. Posologia de uso pratico no dia a dia, sem complicacoes.</span>
+      </div>
+    </div>
+    <div class="benefit-item">
+      <div class="benefit-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+      <div class="benefit-text">
+        <strong>Sem Gluten</strong>
+        <span>Produto desenvolvido sem gluten, adequado para pessoas com restricoes ou preferencias alimentares.</span>
+      </div>
+    </div>
+    <div class="benefit-item">
+      <div class="benefit-icon">
+        <svg viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+      </div>
+      <div class="benefit-text">
+        <strong>Isento de Registro ANVISA</strong>
+        <span>Enquadrado como suplemento alimentar conforme RDC n 240/2018 e RDC n 243/2018 da Anvisa.</span>
+      </div>
+    </div>
+    <div class="benefit-item">
+      <div class="benefit-icon">
+        <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-1"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg>
+      </div>
+      <div class="benefit-text">
+        <strong>Pague na Entrega + Frete Gratis</strong>
+        <span>Compra sem risco: voce so paga quando o produto chegar na sua casa. Sem taxa de entrega.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANVISA -->
+<section>
+  <span class="section-label">Regularizacao</span>
+  <h2 class="section-title">Situacao Regulatoria</h2>
+  <p class="section-body">
+    De acordo com a RDC n 240/2018 da Anvisa, suplementos alimentares compostos por ingredientes autorizados estao isentos de registro sanitario, desde que nao contenham substancias de uso restrito e nao sejam comercializados com alegacoes de tratamento de doencas.
+  </p>
+
+  <div class="anvisa-box">
+    <div class="anvisa-seal">Isento de Registro Anvisa</div>
+    <p>O Alivflex e regularizado como suplemento alimentar conforme as normas da Anvisa (RDC n 240/2018 e RDC n 243/2018), podendo ser comercializado e consumido com seguranca quando seguidas as condicoes de uso.</p>
+    <span class="anvisa-highlight">RDC 240/2018 · RDC 243/2018</span>
+  </div>
+</section>
+
+<!-- PRECOS -->
+<section>
+  <span class="section-label">Investimento</span>
+  <h2 class="section-title">Opcoes de Tratamento</h2>
+  <p class="section-body">Escolha o periodo que melhor se adapta a sua rotina. Quanto maior o kit, maior o desconto por frasco.</p>
+
+  <div class="pricing-grid">
+    <div class="price-card">
+      <span class="price-period">2 Meses</span>
+      <div class="price-main">R$24,80</div>
+      <div class="price-installment">em 12x no cartao</div>
+      <span class="price-avista">R$247,00 a vista</span>
+      <div class="price-detail">2 frascos (1 gratis)</div>
+      <span class="price-gratis">+1 Gratis</span>
+    </div>
+    <div class="price-card featured">
+      <span class="price-card-badge">Popular</span>
+      <span class="price-period">3 Meses</span>
+      <div class="price-main">R$29,82</div>
+      <div class="price-installment">em 12x no cartao</div>
+      <span class="price-avista">R$297,00 a vista</span>
+      <div class="price-detail">3 frascos (1 gratis)</div>
+      <span class="price-gratis">+1 Gratis</span>
+    </div>
+    <div class="price-card">
+      <span class="price-period">4 Meses</span>
+      <div class="price-main">R$34,84</div>
+      <div class="price-installment">em 12x no cartao</div>
+      <span class="price-avista">R$347,00 a vista</span>
+      <div class="price-detail">4 frascos (2 gratis)</div>
+      <span class="price-gratis">+2 Gratis</span>
+    </div>
+    <div class="price-card featured">
+      <span class="price-card-badge">Melhor Valor</span>
+      <span class="price-period">6 Meses</span>
+      <div class="price-main">R$44,88</div>
+      <div class="price-installment">em 12x no cartao</div>
+      <span class="price-avista">R$447,00 a vista</span>
+      <div class="price-detail">6 frascos (3 gratis)</div>
+      <span class="price-gratis">+3 Gratis</span>
+    </div>
+  </div>
+</section>
+
+<!-- PAGAMENTO -->
+<section>
+  <span class="section-label">Forma de Pagamento</span>
+  <h2 class="section-title">Seguranca na Compra</h2>
+
+  <div class="payment-box">
+    <div class="payment-header">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-1"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg>
+      Pague Somente na Entrega
+    </div>
+    <div class="payment-body">
+      <div class="payment-feature">
+        <div class="payment-check">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        Pague so quando o produto chegar
+      </div>
+      <div class="payment-feature">
+        <div class="payment-check">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        Frete gratis para todo o Brasil
+      </div>
+      <div class="payment-feature">
+        <div class="payment-check">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        Parcele em ate 12x no cartao
+      </div>
+      <div class="payment-feature">
+        <div class="payment-check">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        Garantia de 90 dias
+      </div>
+      <div class="payment-feature">
+        <div class="payment-check">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        Devolucao do dinheiro se nao ficar satisfeito
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <span class="section-label" style="color:var(--gold);">Fale Conosco</span>
+  <h2 class="section-title">Pronto para <span>comecar</span>?</h2>
+  <p class="cta-body">
+    Tire suas duvidas, escolha o kit ideal e faca seu pedido com seguranca. Atendimento pelo WhatsApp, pague so na entrega.
+  </p>
+  <a href="https://wa.me/55" class="cta-btn">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    Falar no WhatsApp
+  </a>
+  <p class="cta-disclaimer">
+    Este produto e um suplemento alimentar e nao substitui uma dieta equilibrada e um estilo de vida saudavel. Consulte um profissional de saude antes de iniciar qualquer suplementacao.
+  </p>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-brand">Alivflex</div>
+  <p>
+    Suplemento Alimentar em Capsulas<br>
+    Colageno Tipo II + Magnesio + Curcuma<br>
+    Sem Gluten · Pague na Entrega<br><br>
+    Este portfolio e informativo e destina-se a apresentacao do produto.<br>
+    Suplementos alimentares nao sao medicamentos.
+  </p>
+</div>
+
+<script>
+  // Inject product photos from uploaded images via base64
+  // Since we can't load external files directly in the HTML in this context,
+  // the images will show placeholder. The user should replace src with actual image paths or hosting URLs.
+</script>
+
+</body>
+</html>
